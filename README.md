@@ -13,6 +13,8 @@
   &nbsp;·&nbsp;
   <a href="https://huggingface.co/liuxuetao/ME-Dex-1.0-RoboTwin-Clean2Random-Leaderboard">Model Weights</a>
   &nbsp;·&nbsp;
+  <a href="#robotwin-performance">Results</a>
+  &nbsp;·&nbsp;
   <a href="#getting-started">Getting Started</a>
 </p>
 
@@ -31,6 +33,31 @@ ME-Dex-1.0 is a video-action-tactile policy trained on RoboTwin Clean50. This re
 <p align="center">
   <em>ME-Dex 1.0 framework.</em>
 </p>
+
+## RoboTwin Performance
+
+<div align="center">
+
+<table align="center">
+  <thead>
+    <tr>
+      <th align="center">Method</th>
+      <th align="center">Clean → Clean</th>
+      <th align="center">Clean → Random</th>
+      <th align="center">Average</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center"><strong>ME-Dex-1.0</strong></td>
+      <td align="center"><strong>89.6%</strong></td>
+      <td align="center"><strong>68.1%</strong></td>
+      <td align="center"><strong>78.9%</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
 
 ## Model Weights
 
