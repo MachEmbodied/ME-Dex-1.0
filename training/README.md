@@ -18,7 +18,7 @@ all-instructions cache is very large. Build a Clean50-only cache once from the W
 T5 encoder before training:
 
 ```bash
-python training/build_t5_cache.py \
+python -m training.build_t5_cache \
   --clean-root datasets/ME-Dex-1.0-RoboTwin-Clean50-Tactile \
   --t5-checkpoint checkpoints/Wan2.2-TI2V-5B/models_t5_umt5-xxl-enc-bf16.pth \
   --tokenizer checkpoints/Wan2.2-TI2V-5B/google/umt5-xxl \
