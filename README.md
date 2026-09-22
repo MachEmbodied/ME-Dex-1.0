@@ -25,6 +25,8 @@ ME-Dex-1.0 is a video-action-tactile policy trained on RoboTwin Clean50. This re
 The training entry point is included under [`training/`](training/). The Clean50 tactile dataset is available on
 [Hugging Face](https://huggingface.co/datasets/liuxuetao/MachEmbodied-Dex1.0-RoboTwin-Clean50-Tactile).
 The Clean50 tactile replay procedure is documented in [`training/robotwin_tactile/`](training/robotwin_tactile/).
+The large generated T5 payload is not stored in the dataset release; follow the
+[T5 cache preparation](training/README.md#prepare-the-t5-cache) step before training.
 
 <p align="center">
   <a href="assets/pipeline.pdf">
@@ -108,7 +110,8 @@ pip install -r runtime/requirements.txt
 ## Training
 
 The released reference recipe is in [`training/`](training/). Prepare the Clean50 dataset,
-the Wan2.2 assets, the initialization checkpoint, and the tactile AE checkpoint, then set
+the Wan2.2 assets, the initialization checkpoint, and the tactile AE checkpoint, generate
+the local Clean50 T5 cache, and then set
 their paths in [`training/configs/clean50_uni.yaml`](training/configs/clean50_uni.yaml).
 
 ```bash
