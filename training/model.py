@@ -30,6 +30,7 @@ class MEDEXTrainingModel(nn.Module):
                 video_precision="bfloat16",
                 batch_size=config.batch_size,
                 tactile_ae_checkpoint_path=str(config.tactile.checkpoint),
+                tactile_variational=config.tactile.variational,
                 tactile_expert_config={
                     "latent_dim": config.tactile.latent_dim,
                     "latent_slices": config.tactile.frame_count,
@@ -79,15 +80,16 @@ class MEDEXTrainingModel(nn.Module):
         batch_size = first_frame.shape[0]
         video_noise = torch.randn_like(clean_video)
         action_noise = torch.randn_like(actions)
-        tactile_noise = torch.randn_like(clean_tactile[:, 2:])
+        observed_frames = self.model.tactile_expert.config.condition_slices
+        tactile_noise = torch.randn_like(clean_tactile[:, observed_frames:])
         video_sigma = self._sigma(batch_size, device, dtype).view(batch_size, 1, 1, 1, 1)
         action_sigma = video_sigma.flatten().view(batch_size, 1, 1)
         tactile_sigma = video_sigma.flatten().view(batch_size, 1, 1, 1)
         noisy_video = clean_video * (1 - video_sigma) + video_noise * video_sigma
         noisy_video[:, :, :1] = first_latent
         noisy_actions = actions * (1 - action_sigma) + action_noise * action_sigma
-        noisy_tactile = clean_tactile[:, 2:] * (1 - tactile_sigma) + tactile_noise * tactile_sigma
-        tactile_latent = torch.cat((clean_tactile[:, :2], noisy_tactile), dim=1)
+        noisy_tactile = clean_tactile[:, observed_frames:] * (1 - tactile_sigma) + tactile_noise * tactile_sigma
+        tactile_latent = torch.cat((clean_tactile[:, :observed_frames], noisy_tactile), dim=1)
 
         t5_context = self.model.video_module.preprocess_t5_embeddings(language_embeddings)
         video_velocity, action_velocity, tactile_velocity = self.model._joint_video_action_tactile_velocity(
@@ -103,11 +105,11 @@ class MEDEXTrainingModel(nn.Module):
         video_target = video_noise - clean_video
         video_target[:, :, :1] = 0
         action_target = action_noise - actions
-        tactile_target = tactile_noise - clean_tactile[:, 2:]
+        tactile_target = tactile_noise - clean_tactile[:, observed_frames:]
         video_loss = torch.nn.functional.mse_loss(video_velocity, video_target)
         action_loss = torch.nn.functional.mse_loss(action_velocity, action_target)
         tactile_loss = torch.nn.functional.mse_loss(
-            tactile_velocity[:, 2:], tactile_target
+            tactile_velocity[:, observed_frames:], tactile_target
         )
         return {
             "loss": video_loss + action_loss + tactile_loss,

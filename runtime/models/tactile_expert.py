@@ -56,7 +56,7 @@ class TactileExpertConfig:
             self.hidden_size,
             self.token_packing,
         )
-        expected = (48, 18, 16, 2, 1024, "robotwin_left_right")
+        expected = (48, self.condition_slices + 16, 16, self.condition_slices, 1024, "robotwin_left_right")
         if contract != expected:
             raise ValueError(f"Unsupported tactile contract: {contract}")
 

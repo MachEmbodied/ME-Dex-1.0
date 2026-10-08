@@ -44,21 +44,24 @@ The large generated T5 payload is not stored in the dataset release; follow the
 
 | Method | Clean → Clean | Clean → Random | Average |
 |:--|:--:|:--:|:--:|
-| **ME-Dex-1.0** | **88.9%** | **71.9%** | **80.4%** |
+| ME-Dex-1.0 (AE) | 88.9% | 71.9% | 80.4% |
+| ME-Dex-1.0 (VAE) | 88.7% | 76.2% | 82.5% |
 
 </div>
 
 ## Model Weights
 
-- **Policy & tactile AE:** [ME-Dex-1.0 on Hugging Face](https://huggingface.co/liuxuetao/ME-Dex-1.0-RoboTwin-Clean2Random-Leaderboard).
+- **Policy & tactile encoder:** [ME-Dex-1.0 on Hugging Face](https://huggingface.co/liuxuetao/ME-Dex-1.0-RoboTwin-Clean2Random-Leaderboard). Select `Clean2random-avg80.4` (AE) or `Clean2random-avg82.5` (VAE).
 - **Backbone assets:** VAE, T5 encoder, tokenizer and config from [Wan2.2-TI2V-5B](https://huggingface.co/Wan-AI/Wan2.2-TI2V-5B).
 
 ## Evaluation
 
-Clone XPolicyLab and install the adapter:
+Clone the repositories, use the current runtime with the XPolicyLab adapter, and install:
 
 ```bash
-git clone https://github.com/XPolicyLab/XPolicyLab.git
+git clone https://github.com/MachEmbodied/ME-Dex-1.0.git
+git clone --branch policy/ME_X_1_0-RoboTwin https://github.com/Liuxuetao1219/XPolicyLab.git
+cp -R ME-Dex-1.0/runtime/. XPolicyLab/policy/ME_Dex_1_0/runtime/
 cd XPolicyLab
 bash policy/ME_Dex_1_0/install.sh
 ```
@@ -66,9 +69,11 @@ bash policy/ME_Dex_1_0/install.sh
 Download the released checkpoint and Wan2.2 assets:
 
 ```bash
-CHECKPOINT_DIR=checkpoints/ME-Dex-1.0-RoboTwin-Clean2Random-Leaderboard
+RELEASE=Clean2random-avg82.5
+CHECKPOINT_DIR="${PWD}/checkpoints/ME-Dex-1.0-RoboTwin-Clean2Random-Leaderboard"
 
 hf download liuxuetao/ME-Dex-1.0-RoboTwin-Clean2Random-Leaderboard \
+  --include "${RELEASE}/*" \
   --local-dir "${CHECKPOINT_DIR}"
 
 hf download Wan-AI/Wan2.2-TI2V-5B \
@@ -78,6 +83,8 @@ hf download Wan-AI/Wan2.2-TI2V-5B \
   google/umt5-xxl/tokenizer.json \
   google/umt5-xxl/tokenizer_config.json \
   --local-dir "${CHECKPOINT_DIR}/wan"
+
+export ME_DEX_WAN_PATH="${CHECKPOINT_DIR}/wan"
 ```
 
 Run a RoboTwin evaluation through the standard interface:
@@ -87,11 +94,13 @@ cd policy/ME_Dex_1_0
 ROBOTWIN_TASK_CONFIG=demo_randomized \
 ROBOTWIN_TEST_NUM=100 \
 bash eval.sh RoboTwin adjust_bottle \
-  ME-Dex-1.0-RoboTwin-Clean2Random-Leaderboard \
+  "${CHECKPOINT_DIR}/${RELEASE}" \
   arx_x5 joint 42 0 0 <policy_env> <robotwin_env>
 ```
 
 Use `demo_clean` for Clean evaluation. The released configuration uses BGR input and zero observed tactile force with the sensor support mask preserved.
+
+Set `RELEASE=Clean2random-avg80.4` to use the AE checkpoint. The runtime reads the encoder type and observed-frame count from `model_config.json`.
 
 ## Getting Started
 
@@ -110,7 +119,7 @@ pip install -r runtime/requirements.txt
 ## Training
 
 The released reference recipe is in [`training/`](training/). Prepare the Clean50 dataset,
-the Wan2.2 assets, the initialization checkpoint, and the tactile AE checkpoint, generate
+the Wan2.2 assets, the initialization checkpoint, and the tactile encoder checkpoint, generate
 the local Clean50 T5 cache, and then set
 their paths in [`training/configs/clean50_uni.yaml`](training/configs/clean50_uni.yaml).
 
@@ -124,6 +133,7 @@ torchrun --nnodes=2 --nproc_per_node=16 \
 
 Set `model.topology` to `full_joint` for the default joint-attention recipe or to
 `h_bridge` for the corresponding bridge configuration.
+For VAE-based policy training, use [`training/configs/clean50_vae.yaml`](training/configs/clean50_vae.yaml). Both reference recipes use a frozen pretrained tactile encoder.
 
 ## Acknowledgements
 

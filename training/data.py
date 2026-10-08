@@ -65,9 +65,11 @@ class Clean50Dataset(Dataset):
         *,
         samples_per_episode: int = 10,
         image_size: tuple[int, int] = (384, 320),
+        observed_frames: int = 2,
     ) -> None:
         self.root = Path(root).expanduser().resolve()
         self.image_size = image_size
+        self.observed_frames = observed_frames
         self.text_cache = TextEmbeddingCache(Path(text_cache))
         manifest = Path(quality_manifest)
         opener = gzip.open if manifest.suffix == ".gz" else open
@@ -153,6 +155,7 @@ class Clean50Dataset(Dataset):
         anchor = random.choice(self._anchors(episode))
         action_indices = [anchor + offset for offset in ACTION_OFFSETS]
         video_indices = [anchor + offset for offset in VIDEO_OFFSETS]
+        observed_indices = list(range(anchor - self.observed_frames + 1, anchor + 1))
         with h5py.File(episode.data, "r") as handle:
             qpos = handle["joint_action/vector"]
             state = np.asarray(qpos[anchor], dtype=np.float32)
@@ -161,14 +164,14 @@ class Clean50Dataset(Dataset):
             video_frames = torch.stack([self._frame(handle, index) for index in video_indices])
             force = handle["tactile_force_field/force_canonical"]
             support = handle["tactile_force_field/support_mask"]
-            observed = np.stack([np.asarray(force[index], dtype=np.float32) for index in (anchor - 1, anchor)])
+            observed = np.stack([np.asarray(force[index], dtype=np.float32) for index in observed_indices])
             future = np.stack([np.asarray(force[index], dtype=np.float32) for index in action_indices])
             if support.ndim == 3:
                 static_support = np.asarray(support, dtype=np.bool_)
-                observed_support = np.broadcast_to(static_support, (2, 4, 10, 14)).copy()
+                observed_support = np.broadcast_to(static_support, (self.observed_frames, 4, 10, 14)).copy()
                 future_support = np.broadcast_to(static_support, (16, 4, 10, 14)).copy()
             elif support.ndim == 4:
-                observed_support = np.stack([np.asarray(support[index], dtype=np.bool_) for index in (anchor - 1, anchor)])
+                observed_support = np.stack([np.asarray(support[index], dtype=np.bool_) for index in observed_indices])
                 future_support = np.stack([np.asarray(support[index], dtype=np.bool_) for index in action_indices])
                 static_support = np.asarray(support[0], dtype=np.bool_)
                 selected_support = np.concatenate((observed_support, future_support), axis=0)
@@ -180,7 +183,7 @@ class Clean50Dataset(Dataset):
             future *= future_support[:, :, None]
             intervals = np.asarray(handle["tactile_force_field/interval_seconds"][: action_indices[-1] + 1], dtype=np.float64)
         absolute_time = np.cumsum(intervals)
-        times = (absolute_time[np.asarray([anchor - 1, anchor, *action_indices])] - absolute_time[anchor - 1]).astype(np.float32)
+        times = (absolute_time[np.asarray([*observed_indices, *action_indices])] - absolute_time[anchor - 1]).astype(np.float32)
         instructions = json.loads(episode.instructions.read_text(encoding="utf-8"))["seen"]
         prompt = random.choice([text for text in instructions if text in self.text_cache.prompt_to_index])
         return {
@@ -193,8 +196,8 @@ class Clean50Dataset(Dataset):
             "tactile_observed_support_source": torch.from_numpy(np.moveaxis(observed_support, 1, 0).copy()),
             "tactile_future_source": torch.from_numpy(np.moveaxis(future, 1, 0).copy()),
             "tactile_future_support_source": torch.from_numpy(np.moveaxis(future_support, 1, 0).copy()),
-            "tactile_observed_frame_times": torch.from_numpy(times[:2].copy()),
-            "tactile_future_query_times": torch.from_numpy(times[2:].copy()),
+            "tactile_observed_frame_times": torch.from_numpy(times[:self.observed_frames].copy()),
+            "tactile_future_query_times": torch.from_numpy(times[self.observed_frames:].copy()),
         }
 
 

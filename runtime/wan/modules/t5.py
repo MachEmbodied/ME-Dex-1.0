@@ -480,6 +480,7 @@ class T5EncoderModel:
         checkpoint_path=None,
         tokenizer_path=None,
         shard_fn=None,
+        trim_padding=False,
     ):
         self.text_len = text_len
         self.dtype = dtype
@@ -488,6 +489,7 @@ class T5EncoderModel:
         self.device = device
         self.checkpoint_path = checkpoint_path
         self.tokenizer_path = tokenizer_path
+        self.trim_padding = trim_padding
 
         # init model
         model = umt5_xxl(
@@ -509,8 +511,12 @@ class T5EncoderModel:
     def __call__(self, texts, device):
         ids, mask = self.tokenizer(
             texts, return_mask=True, add_special_tokens=True)
+        seq_lens = mask.gt(0).sum(dim=1).long()
+        if self.trim_padding:
+            max_seq_len = int(seq_lens.max().item())
+            ids = ids[:, :max_seq_len]
+            mask = mask[:, :max_seq_len]
         ids = ids.to(device)
         mask = mask.to(device)
-        seq_lens = mask.gt(0).sum(dim=1).long()
         context = self.model(ids, mask)
         return [u[:v] for u, v in zip(context, seq_lens)]

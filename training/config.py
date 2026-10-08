@@ -17,10 +17,11 @@ class TactileConfig:
     queries_per_frame: int = 16
     observed_frames: int = 2
     hidden_size: int = 1024
+    variational: bool = False
 
     def __post_init__(self) -> None:
-        if (self.latent_dim, self.frame_count, self.queries_per_frame, self.observed_frames, self.hidden_size) != (48, 18, 16, 2, 1024):
-            raise ValueError("The public recipe uses the unified [18,16,48] tactile contract")
+        if (self.latent_dim, self.frame_count, self.queries_per_frame, self.hidden_size) != (48, self.observed_frames + 16, 16, 1024):
+            raise ValueError("Expected 16 future tactile frames with 16 slots of width 48")
 
 
 @dataclass(frozen=True)

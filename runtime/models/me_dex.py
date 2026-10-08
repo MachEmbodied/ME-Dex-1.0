@@ -53,6 +53,7 @@ class MEDexConfig:
     video_width: int = 320
     batch_size: int = 1
     tactile_ae_checkpoint_path: str = ""
+    tactile_variational: bool = False
     tactile_expert_config: Optional[Dict[str, Any]] = None
     attention_topology: str = "full_joint"
     h_bridge_joint_start_layer: int = 8
@@ -417,6 +418,8 @@ class MEDexModel(nn.Module):
             checkpoint_path=config.tactile_ae_checkpoint_path,
             device=self.device,
             dtype=self.dtype,
+            variational=config.tactile_variational,
+            observed_frames=tactile_config.condition_slices,
         )
         object.__setattr__(self, "tactile_codec", tactile_codec)
 

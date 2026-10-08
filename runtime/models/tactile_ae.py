@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from contextlib import nullcontext
 
 import torch
 import torch.nn as nn
@@ -54,11 +55,11 @@ class PositiveForceNormalizer(nn.Module):
 class TactileAE:
     """Load the unified encoder and expose the RoboTwin sequence contract."""
 
-    def __init__(self, *, checkpoint_path, device, dtype):
+    def __init__(self, *, checkpoint_path, device, dtype, variational=False, observed_frames=2):
         checkpoint = Path(checkpoint_path).expanduser().resolve()
 
         state = torch.load(checkpoint, map_location="cpu", weights_only=False)
-        self.model = UnifiedTactileAE()
+        self.model = UnifiedTactileAE(variational=variational)
         self.model.load_state_dict(state["ema"]["shadow"], strict=True)
         self.model.eval().requires_grad_(False).to(device=device, dtype=dtype)
         spec = state["config"]["normalizations"]["robotwin_si"]
@@ -68,6 +69,7 @@ class TactileAE:
         self.normalizer.eval().requires_grad_(False).to(device=device)
         self.device = device
         self.dtype = dtype
+        self.observed_frames = observed_frames
         self.slots = surface_slots("robotwin").to(device)
         self.slot_ids = torch.tensor(ROBOTWIN_SLOT_IDS, device=device)
         if self.slots.flatten().tolist() != list(ROBOTWIN_SLOT_IDS):
@@ -117,13 +119,11 @@ class TactileAE:
         packed_support = static_support.flatten(0, 1)
         owner = torch.arange(batch, device=self.device).repeat_interleave(4)
         slots = self.slots.repeat(batch, 1)
-        output = self.model(
-            packed_force.to(self.dtype),
-            packed_support,
-            owner,
-            slots,
-            batch,
-        )
+        autocast = torch.autocast(device_type=self.device.type, dtype=self.dtype) if self.model.variational else nullcontext()
+        with autocast:
+            output = self.model(
+                packed_force.to(self.dtype), packed_support, owner, slots, batch
+            )
         latent = output["frame_tokens"].index_select(2, self.slot_ids)
         valid = output["frame_token_valid"].index_select(2, self.slot_ids)
         expected = (batch, time, 16, 48)
@@ -146,7 +146,7 @@ class TactileAE:
         )
         support = torch.cat(
             (
-                self._dataset_support(observed_support_source, 2),
+                self._dataset_support(observed_support_source, self.observed_frames),
                 self._dataset_support(future_support_source, 16),
             ),
             dim=1,
@@ -156,5 +156,5 @@ class TactileAE:
     @torch.no_grad()
     def encode_condition(self, observed_source, *, observed_support_source, **_):
         force = observed_source.permute(0, 2, 1, 3, 4, 5)
-        support = self._dataset_support(observed_support_source, 2)
+        support = self._dataset_support(observed_support_source, self.observed_frames)
         return self._encode(force, support)

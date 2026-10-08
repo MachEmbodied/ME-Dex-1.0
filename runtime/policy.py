@@ -79,6 +79,7 @@ class MEDexPolicy:
             device="cuda",
             checkpoint_path=str(self.wan_path / "models_t5_umt5-xxl-enc-bf16.pth"),
             tokenizer_path=str(self.wan_path / "google" / "umt5-xxl"),
+            trim_padding=bool(self.config["inference"].get("trim_text_padding", False)),
         )
         self.current_frame: torch.Tensor | None = None
         self.current_state: torch.Tensor | None = None
@@ -106,6 +107,7 @@ class MEDexPolicy:
                 video_width=int(common["video_width"]),
                 batch_size=1,
                 tactile_ae_checkpoint_path=str(self.metadata["tactile_checkpoint"]),
+                tactile_variational=bool(cfg["model"]["tactile"].get("variational", False)),
                 tactile_expert_config=cfg["model"]["tactile_expert"],
                 attention_topology=str(cfg["model"].get("attention_topology", "full_joint")),
                 h_bridge_joint_start_layer=int(cfg["model"].get("h_bridge_joint_start_layer", 8)),
@@ -147,16 +149,17 @@ class MEDexPolicy:
     def _zero_tactile(self) -> dict[str, torch.Tensor | float]:
         cadence = self.tactile_frame_interval_seconds
         dtype = self.model.dtype
+        observed_frames = int(self.config["model"]["tactile_expert"]["condition_slices"])
+        future_start = int(self.config["inference"].get("tactile_future_start", 3))
         return {
             "tactile_observed_source": torch.zeros(
-                (1, 4, 2, 3, 10, 14), device=self.device, dtype=torch.float32
+                (1, 4, observed_frames, 3, 10, 14), device=self.device, dtype=torch.float32
             ),
-            "tactile_observed_support_source": torch.from_numpy(support_mask()).to(self.device)[None, :, None, None, :, :].expand(1, 4, 2, 1, 10, 14),
-            "tactile_observed_frame_times": torch.tensor(
-                [[-cadence, 0.0]], device=self.device, dtype=dtype
-            ),
+            "tactile_observed_support_source": torch.from_numpy(support_mask()).to(self.device)[None, :, None, None, :, :].expand(1, 4, observed_frames, 1, 10, 14),
+            "tactile_observed_frame_times": cadence
+            * torch.arange(1 - observed_frames, 1, device=self.device, dtype=dtype).unsqueeze(0),
             "tactile_future_query_times": cadence
-            * torch.arange(3, 49, 3, device=self.device, dtype=dtype).unsqueeze(0),
+            * torch.arange(future_start, future_start + 48, 3, device=self.device, dtype=dtype).unsqueeze(0),
             "tactile_schedule_shift": float(self.config["inference"]["tactile_schedule_shift"]),
         }
 

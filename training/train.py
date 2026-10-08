@@ -69,6 +69,7 @@ def load_config(path: Path) -> tuple[TrainingConfig, Path, Path]:
         queries_per_frame=int(model["tactile_queries_per_frame"]),
         observed_frames=int(model["tactile_observed_frames"]),
         hidden_size=int(model["hidden_size"]),
+        variational=bool(model.get("tactile_variational", False)),
     )
     config = TrainingConfig(
         dataset=dataset,
@@ -131,6 +132,7 @@ def main() -> None:
         config.dataset.text_cache,
         config.dataset.quality_manifest,
         samples_per_episode=config.dataset.samples_per_episode,
+        observed_frames=config.tactile.observed_frames,
     )
     sampler = DistributedSampler(dataset, shuffle=True)
     loader = DataLoader(
