@@ -116,6 +116,11 @@ pip install -r runtime/requirements.txt
 
 **Tactile inputs.** Clean50 training included additionally collected three-axis tactile force data. Leaderboard observations contain no tactile measurements, so the observed tactile frames are set to zero while preserving the sensor support mask. Future tactile states are predicted by the model.
 
+## DexJoCo
+
+The `dexjoco` branch also includes the 11-task ME-Dex-1.0 DexJoCo recipe: 384 × 320 video, 44-D actions, DJ-TFA-2.0 tactile sensing, and the V4-Uni Hand2 encoder.
+See [DexJoCo training](training/dexjoco/README.md), [inference and evaluation](runtime/dexjoco/README.md), and [migration details](docs/dexjoco_migration.md).
+
 ## Training
 
 The released reference recipe is in [`training/`](training/). Prepare the Clean50 dataset,

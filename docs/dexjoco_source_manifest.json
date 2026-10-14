@@ -1,0 +1,411 @@
+{
+  "upstream_base": "a2db63b979e748bcea692966b1c57ab2984155a9",
+  "files": [
+    {
+      "source": "models/wan_model.py",
+      "destination": "runtime/dexjoco/models/wan_model.py",
+      "source_sha256": "41700b404a2bfc6cb10306e54669c302f24d1b541c608a0386557344b07e74b0",
+      "release_sha256": "facaa05c532f0a7856ea03aa7fd78c0b0b1cfeb8617c9f3a2003590286803f86"
+    },
+    {
+      "source": "models/__init__.py",
+      "destination": "runtime/dexjoco/models/__init__.py",
+      "source_sha256": "1d3e6f785c1ca7e6251b310b6132f32d5f9d22bf00da76adce8ab135f262a2dc",
+      "release_sha256": "05648a005c38aa2c44f2cdff92d2477ca895438d3343bf2e5084c368f160105a"
+    },
+    {
+      "source": "models/und_expert.py",
+      "destination": "runtime/dexjoco/models/und_expert.py",
+      "source_sha256": "7ff9b43e10342a8b55378ca4977178f254df84ec3b15d110e2432fb12fa13c95",
+      "release_sha256": "27a6149ba28a4bab08c76325d55920d50d0c818e7d905c5493ec30664ce86847"
+    },
+    {
+      "source": "models/action_expert.py",
+      "destination": "runtime/dexjoco/models/action_expert.py",
+      "source_sha256": "c74392abce927df10482edd48987d27b8c79855870ab87aa4bf4a882c14a1a20",
+      "release_sha256": "172bd39febc8a7bf45e64bfd12596de3cd57d9251cdefec7c328b2616ec82535"
+    },
+    {
+      "source": "models/motus.py",
+      "destination": "runtime/dexjoco/models/motus.py",
+      "source_sha256": "9f3e67e152a2456e5907f287d60144db77da6d5566528310d8569de93794f08e",
+      "release_sha256": "e0d1e38ebfcb13984a809b6561fe61fad52f19e81fc77bb351bec806d2e9af46"
+    },
+    {
+      "source": "models/wtam_v21/tactile_expert.py",
+      "destination": "runtime/dexjoco/models/wtam_v21/tactile_expert.py",
+      "source_sha256": "3ae20283b074349194844f83206471537d7b4c38bc6f060b357901ca68e23e35",
+      "release_sha256": "810d666e8c5aaee69726d9d03412facc3682a025550548f8d44f0ad8aed458ab"
+    },
+    {
+      "source": "models/wtam_v21/__init__.py",
+      "destination": "runtime/dexjoco/models/wtam_v21/__init__.py",
+      "source_sha256": "90a6544f83d50d225ca541833574d21025ddf2949022e97333fd9a1df44700ea",
+      "release_sha256": "90a6544f83d50d225ca541833574d21025ddf2949022e97333fd9a1df44700ea"
+    },
+    {
+      "source": "models/wtam_v21/tactile_codec.py",
+      "destination": "runtime/dexjoco/models/wtam_v21/tactile_codec.py",
+      "source_sha256": "248d1234efa5a38864a7659803b9be54c59f9ba178048cadab3374db705c99a4",
+      "release_sha256": "248d1234efa5a38864a7659803b9be54c59f9ba178048cadab3374db705c99a4"
+    },
+    {
+      "source": "models/wtam_v21/tactile_vae/protocol.py",
+      "destination": "runtime/dexjoco/models/wtam_v21/tactile_vae/protocol.py",
+      "source_sha256": "94e60e09e651495953714bb61765d3ca2c6be944f0fd79b4a108a49bffb1a899",
+      "release_sha256": "94e60e09e651495953714bb61765d3ca2c6be944f0fd79b4a108a49bffb1a899"
+    },
+    {
+      "source": "models/wtam_v21/tactile_vae/__init__.py",
+      "destination": "runtime/dexjoco/models/wtam_v21/tactile_vae/__init__.py",
+      "source_sha256": "53f6cdcdaee8d779cde3bff655a75ba82f126865403dce9d6cb2053d2698e0d9",
+      "release_sha256": "53f6cdcdaee8d779cde3bff655a75ba82f126865403dce9d6cb2053d2698e0d9"
+    },
+    {
+      "source": "models/wtam_v21/tactile_vae/model.py",
+      "destination": "runtime/dexjoco/models/wtam_v21/tactile_vae/model.py",
+      "source_sha256": "0ef0133783d70731bdd1fe098c8f06efd4949c34b42888327da229368890d5c1",
+      "release_sha256": "0ef0133783d70731bdd1fe098c8f06efd4949c34b42888327da229368890d5c1"
+    },
+    {
+      "source": "models/wtam_v21/tactile_vae/normalizer.py",
+      "destination": "runtime/dexjoco/models/wtam_v21/tactile_vae/normalizer.py",
+      "source_sha256": "83d7c352ac0beeaaee68cf9c36d4029b670f53bde1b66ddf1d01bb4e7cec23e2",
+      "release_sha256": "83d7c352ac0beeaaee68cf9c36d4029b670f53bde1b66ddf1d01bb4e7cec23e2"
+    },
+    {
+      "source": "models/wtam_v4_uni/__init__.py",
+      "destination": "runtime/dexjoco/models/wtam_v4_uni/__init__.py",
+      "source_sha256": "3ba03e3c267cb2dd7e27cbdcbf21d438a9e715e4a3d4f69fac5976139cddfb9a",
+      "release_sha256": "3ba03e3c267cb2dd7e27cbdcbf21d438a9e715e4a3d4f69fac5976139cddfb9a"
+    },
+    {
+      "source": "models/wtam_v4_uni/frozen_unified_tactile_codec.py",
+      "destination": "runtime/dexjoco/models/wtam_v4_uni/frozen_unified_tactile_codec.py",
+      "source_sha256": "c303e9c80e428df0ce2cd3332075b07aab8a00da0890770d5273b70baed0545e",
+      "release_sha256": "5242161aba2b67caf7fad9caa100f4132b8ddcd2449d77bcff90467167e7ad3e"
+    },
+    {
+      "source": "models/wtam_v25/__init__.py",
+      "destination": "runtime/dexjoco/models/wtam_v25/__init__.py",
+      "source_sha256": "0502263cec5e6730f90558c8a13dd46dda4c4759a848ac62e11dd37218edc287",
+      "release_sha256": "0502263cec5e6730f90558c8a13dd46dda4c4759a848ac62e11dd37218edc287"
+    },
+    {
+      "source": "models/wtam_v25/frozen_anatomy_tactile_codec.py",
+      "destination": "runtime/dexjoco/models/wtam_v25/frozen_anatomy_tactile_codec.py",
+      "source_sha256": "bfeef0928d0ae1a8ab72941fc3a6daa8fb03018841d82895e514bb1f7d04272f",
+      "release_sha256": "bfeef0928d0ae1a8ab72941fc3a6daa8fb03018841d82895e514bb1f7d04272f"
+    },
+    {
+      "source": "utils/attention_contract.py",
+      "destination": "runtime/dexjoco/utils/attention_contract.py",
+      "source_sha256": "21bb691d930696460c85b8e9a3713edf7a111373ad6c97b119783f9fa5e9d4ba",
+      "release_sha256": "21bb691d930696460c85b8e9a3713edf7a111373ad6c97b119783f9fa5e9d4ba"
+    },
+    {
+      "source": "utils/__init__.py",
+      "destination": "runtime/dexjoco/utils/__init__.py",
+      "source_sha256": "262022b3ebd990921f5e051931ae3e038a76d908d0a2ac46c55d2a56f66d1ffb",
+      "release_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "source": "utils/five_modal_initialization.py",
+      "destination": "runtime/dexjoco/utils/five_modal_initialization.py",
+      "source_sha256": "d5b130555768cad7855476e877bd593799e08c32d767774483c08596a9c5d3b8",
+      "release_sha256": "d5b130555768cad7855476e877bd593799e08c32d767774483c08596a9c5d3b8"
+    },
+    {
+      "source": "utils/strict_loading.py",
+      "destination": "runtime/dexjoco/utils/strict_loading.py",
+      "source_sha256": "1bfa865fd7f408003ea2599e754a392a2b3f6ed75a27177975cc1e723bf338a5",
+      "release_sha256": "1bfa865fd7f408003ea2599e754a392a2b3f6ed75a27177975cc1e723bf338a5"
+    },
+    {
+      "source": "utils/va_to_vat_warmstart.py",
+      "destination": "runtime/dexjoco/utils/va_to_vat_warmstart.py",
+      "source_sha256": "f6519aa1a88b3284e70dbd28c360437cc858be9696990c5ec4295f7c8b930745",
+      "release_sha256": "f6519aa1a88b3284e70dbd28c360437cc858be9696990c5ec4295f7c8b930745"
+    },
+    {
+      "source": "utils/common.py",
+      "destination": "runtime/dexjoco/utils/common.py",
+      "source_sha256": "5c79bbf76e223f19ecabf1b5f21df414dd954f8f0793b6d86417b8fda4097b4b",
+      "release_sha256": "0cba6f84d46da7cc925f659f1333706143d43dd6a70b6c4ff3a8eb91e8c07bce"
+    },
+    {
+      "source": "utils/scheduler.py",
+      "destination": "runtime/dexjoco/utils/scheduler.py",
+      "source_sha256": "7eb2d723a4003b80adf5168c2e8ceb819f766a3b4636934e6293b108f64c1298",
+      "release_sha256": "720fca8af5b3563dfa3553bae6ad6d016d1036fa89308cd19d00bcd03bb2bad7"
+    },
+    {
+      "source": "utils/stage2_warmstart.py",
+      "destination": "runtime/dexjoco/utils/stage2_warmstart.py",
+      "source_sha256": "c23a66e20641781cdade48eb115d504f9749e531ccda9ecfcf372a06fc8aefea",
+      "release_sha256": "c23a66e20641781cdade48eb115d504f9749e531ccda9ecfcf372a06fc8aefea"
+    },
+    {
+      "source": "bak/wan/__init__.py",
+      "destination": "runtime/dexjoco/wan/__init__.py",
+      "source_sha256": "a8a15b82af2027affbe758e20685d787b18af58f8904550f6a134eda047d66ef",
+      "release_sha256": "a8a15b82af2027affbe758e20685d787b18af58f8904550f6a134eda047d66ef"
+    },
+    {
+      "source": "bak/wan/utils/__init__.py",
+      "destination": "runtime/dexjoco/wan/utils/__init__.py",
+      "source_sha256": "03de7518b9bfe0b8e78a6ce39ee5c0e750df453d6f1bfa54ee961a42a7697ed9",
+      "release_sha256": "03de7518b9bfe0b8e78a6ce39ee5c0e750df453d6f1bfa54ee961a42a7697ed9"
+    },
+    {
+      "source": "bak/wan/utils/fm.py",
+      "destination": "runtime/dexjoco/wan/utils/fm.py",
+      "source_sha256": "9f1104a3e5ef1a371938a7ba10c63cb05cade9bffcefa15bab96fb83311ec904",
+      "release_sha256": "15d365d6ec47b0f422a2daf2052aaabf2c713843de442ada7f42892a113309f7"
+    },
+    {
+      "source": "bak/wan/utils/fm_solvers_unipc.py",
+      "destination": "runtime/dexjoco/wan/utils/fm_solvers_unipc.py",
+      "source_sha256": "0dec8c7ed17f6f2049275c6848113314da6ccec1c8db5bdc89df43c05c6038d9",
+      "release_sha256": "0dec8c7ed17f6f2049275c6848113314da6ccec1c8db5bdc89df43c05c6038d9"
+    },
+    {
+      "source": "bak/wan/modules/attention.py",
+      "destination": "runtime/dexjoco/wan/modules/attention.py",
+      "source_sha256": "5f347657f67a2949509053847c13d18553a9f85f4bdf0bab47df61abaeeb515f",
+      "release_sha256": "5f347657f67a2949509053847c13d18553a9f85f4bdf0bab47df61abaeeb515f"
+    },
+    {
+      "source": "bak/wan/modules/t5.py",
+      "destination": "runtime/dexjoco/wan/modules/t5.py",
+      "source_sha256": "b519b9c49611bfb365312c9829eef8fa570e1845c9f3aaaef8e5fb99a0fd920d",
+      "release_sha256": "b519b9c49611bfb365312c9829eef8fa570e1845c9f3aaaef8e5fb99a0fd920d"
+    },
+    {
+      "source": "bak/wan/modules/__init__.py",
+      "destination": "runtime/dexjoco/wan/modules/__init__.py",
+      "source_sha256": "2d8cb30317ce9a562e65cbbf4898d8c69ec6312013913b8306edf1bb6dcda0c7",
+      "release_sha256": "2d8cb30317ce9a562e65cbbf4898d8c69ec6312013913b8306edf1bb6dcda0c7"
+    },
+    {
+      "source": "bak/wan/modules/model.py",
+      "destination": "runtime/dexjoco/wan/modules/model.py",
+      "source_sha256": "83372a192d7601811d6e3752905f7dacda1e983cc93a51acfd0c850b02d97738",
+      "release_sha256": "0032155f11698e5d4c51fce6c77539c9dd591da360f57eee4026606d0cbb3103"
+    },
+    {
+      "source": "bak/wan/modules/vae2_2.py",
+      "destination": "runtime/dexjoco/wan/modules/vae2_2.py",
+      "source_sha256": "e949e2c7b6fbda11caa2546c425992f193b3c05ff82544e269db5f11f687ebdd",
+      "release_sha256": "e949e2c7b6fbda11caa2546c425992f193b3c05ff82544e269db5f11f687ebdd"
+    },
+    {
+      "source": "bak/wan/modules/tokenizers.py",
+      "destination": "runtime/dexjoco/wan/modules/tokenizers.py",
+      "source_sha256": "cf5b189c1ae017326efadab2fc6380ba223fa7a59d0be6464bd264db53c76934",
+      "release_sha256": "cf5b189c1ae017326efadab2fc6380ba223fa7a59d0be6464bd264db53c76934"
+    },
+    {
+      "source": "inference/dexjoco/contracts.py",
+      "destination": "runtime/dexjoco/contracts.py",
+      "source_sha256": "ef541e5b0441ace5b28080eb9ffebb5417b568760d3a7f0f13795295d8944401",
+      "release_sha256": "ef541e5b0441ace5b28080eb9ffebb5417b568760d3a7f0f13795295d8944401"
+    },
+    {
+      "source": "inference/dexjoco/observations.py",
+      "destination": "runtime/dexjoco/observations.py",
+      "source_sha256": "3b86e643fabae825b82d67adb5f53185ba033b85c806b210109b688ffe4e003e",
+      "release_sha256": "4863dc6a5edb50972d912c2df41c2358ed90d4f4f75e7fb4a646ca7ff6ea2fdd"
+    },
+    {
+      "source": "data/dexjoco/normalization.py",
+      "destination": "runtime/dexjoco/normalization.py",
+      "source_sha256": "1548783e0a48fd3f4afc2c7c425dea21ff9b25b3ae2cf2e5cd3fa69eed7f2b54",
+      "release_sha256": "1548783e0a48fd3f4afc2c7c425dea21ff9b25b3ae2cf2e5cd3fa69eed7f2b54"
+    },
+    {
+      "source": "data/dexjoco/dexjoco_wtam_dataset.py",
+      "destination": "training/dexjoco/data/dexjoco_wtam_dataset.py",
+      "source_sha256": "116aa7893498bff3ec84803d8a3b05876d1a9ace8ea1a257c2271956117a6e89",
+      "release_sha256": "5f1291a77bbf8d821ed6e7dbcf7a1f8708c359cc48052f3e3a57af936857ea92"
+    },
+    {
+      "source": "data/dexjoco/dexjoco_raw_wtam_dataset.py",
+      "destination": "training/dexjoco/data/dexjoco_raw_wtam_dataset.py",
+      "source_sha256": "9e7ba7862cfb70727f171c1f9733b60e4c25e4ca7b403cf7965e89d594808ddf",
+      "release_sha256": "f170e5e931f4ff8dbd63daf515f66c4cd63f18cce078cec57b1153dff3f44115"
+    },
+    {
+      "source": "data/dexjoco/dexjoco_raw_dj_tfa2_wtam_dataset.py",
+      "destination": "training/dexjoco/data/dexjoco_raw_dj_tfa2_wtam_dataset.py",
+      "source_sha256": "ed37ffc21e6a652aebf9b3774a25d62067c5bf877aff16e3e73dd7ec90d30070",
+      "release_sha256": "3eb631d7b880634209971dcc8211edeaa5d1040b69d9821a08752c7c8998a3fa"
+    },
+    {
+      "source": "data/dataset.py",
+      "destination": "training/dexjoco/data/factory.py",
+      "source_sha256": "12ea1680683661172e3c990547d78700b0cd9cdef0ba4417fbbd8d35a0179486",
+      "release_sha256": "f6327b00b5f705a8d5f9686a36b6353f3ab557e0d7522323cd9bd5815071c8ba"
+    },
+    {
+      "source": "train/train.py",
+      "destination": "training/dexjoco/train.py",
+      "source_sha256": "8756b962784678856f808872604be9a6968d72d10004abf79a2b0b0fb9c5b1c9",
+      "release_sha256": "91127b2587e2859b9014d50dc2701cac13887a08e819742eeed448c3a6bf19a1"
+    },
+    {
+      "source": "train/sample.py",
+      "destination": "training/dexjoco/sample.py",
+      "source_sha256": "ed91aaf977a16c017d5bef8a519cda564ec1ad8dd65a585f923395ef713c0f61",
+      "release_sha256": "1c393ca730f07c980e47048a5c3b92c3e43f0e798bee5df483ee651d59e4c577"
+    },
+    {
+      "source": "scripts/dexjoco/eval_dexjoco_5880/eval_raw_dj_tfa2_v4_uni_hand2_stage1_wan_random_action_tactile_full1100_original_v_step60000_sparse_densify_full48/model_loader_dj_tfa2.py",
+      "destination": "runtime/dexjoco/checkpoint.py",
+      "source_sha256": "3125849ab3ec565da6e9070c3b01c81abf2fc06dcfa005248e720b42c0c1789b",
+      "release_sha256": "6656b97bede86b3a9fb5df60956295ed784dc9c5d335b6993b0e959bfa2e19bd"
+    },
+    {
+      "source": "scripts/dexjoco/eval_dexjoco_5880/eval_raw_dj_tfa2_v4_uni_hand2_stage1_wan_random_action_tactile_full1100_original_v_step60000_sparse_densify_full48/server_raw_aligned_dj_tfa2.py",
+      "destination": "runtime/dexjoco/server.py",
+      "source_sha256": "6883beb0286e2abf86e4bbe2d5a23c0cb65a9902d222f89ed0fb0a7c20a81690",
+      "release_sha256": "70e070d2053c6da4819ca969f14f829f9938c6bae86e43b5a96838f08d68d6c5"
+    },
+    {
+      "source": "scripts/dexjoco/eval_dexjoco_5880/eval_raw_dj_tfa2_v4_uni_hand2_stage1_wan_random_action_tactile_full1100_original_v_step60000_sparse_densify_full48/evaluate_dexjoco_raw16_dj_tfa2.py",
+      "destination": "runtime/dexjoco/evaluate.py",
+      "source_sha256": "93ca6569a4dea07f6cbc15767a16e9e7df1d4bbeea41f06177df2c6c23f51da7",
+      "release_sha256": "3078a54c2c70b62077cb2983669f65d93270316fdfd097c49ec3917a0b126999"
+    },
+    {
+      "source": "scripts/dexjoco/eval_dexjoco_5880/eval_raw_dj_tfa2_v4_uni_hand2_stage1_wan_random_action_tactile_full1100_original_v_step60000_sparse_densify_full48/dj_tfa2_palmar_collector.py",
+      "destination": "runtime/dexjoco/tactile_collector.py",
+      "source_sha256": "7e79883d2d2ce361b07a4f06b9d6c4b6a236d595049d7369f52ef9c9ae7a2539",
+      "release_sha256": "7e79883d2d2ce361b07a4f06b9d6c4b6a236d595049d7369f52ef9c9ae7a2539"
+    },
+    {
+      "source": "manifeel/tactile_ae_v4/__init__.py",
+      "destination": "runtime/dexjoco/tactile_encoder/manifeel/tactile_ae_v4/__init__.py",
+      "source_sha256": "602fb94e13d9c27cec7df9637579c1b47757e13f242b849b8f742780c6713bb0",
+      "release_sha256": "b553e6c0af382ed20ee1d0fd439faded5746dbecf348c118e0cf1111d547500f"
+    },
+    {
+      "source": "manifeel/tactile_ae_v4/layers.py",
+      "destination": "runtime/dexjoco/tactile_encoder/manifeel/tactile_ae_v4/layers.py",
+      "source_sha256": "2b56120de06acfd3655bd1eea24186c94b6f88377f31e0635930e7bffbc1102b",
+      "release_sha256": "2b56120de06acfd3655bd1eea24186c94b6f88377f31e0635930e7bffbc1102b"
+    },
+    {
+      "source": "manifeel/tactile_ae_v3/__init__.py",
+      "destination": "runtime/dexjoco/tactile_encoder/manifeel/tactile_ae_v3/__init__.py",
+      "source_sha256": "3ae845faf197f1a6061a62c8d491543e5fb81cbb01f316c43513a75ac449035b",
+      "release_sha256": "b553e6c0af382ed20ee1d0fd439faded5746dbecf348c118e0cf1111d547500f"
+    },
+    {
+      "source": "manifeel/tactile_ae_v3/layers.py",
+      "destination": "runtime/dexjoco/tactile_encoder/manifeel/tactile_ae_v3/layers.py",
+      "source_sha256": "7a41acf7a057cf8c565cf75cc1d50722e0ccc51ba2068100047fb4966854be35",
+      "release_sha256": "7a41acf7a057cf8c565cf75cc1d50722e0ccc51ba2068100047fb4966854be35"
+    },
+    {
+      "source": "manifeel/tactile_codec_v6/__init__.py",
+      "destination": "runtime/dexjoco/tactile_encoder/manifeel/tactile_codec_v6/__init__.py",
+      "source_sha256": "1fefd1817e72079d5a66d540fe161c0bde367dc51fe658015e3f2dc781f485c9",
+      "release_sha256": "b553e6c0af382ed20ee1d0fd439faded5746dbecf348c118e0cf1111d547500f"
+    },
+    {
+      "source": "manifeel/tactile_codec_v6/layers.py",
+      "destination": "runtime/dexjoco/tactile_encoder/manifeel/tactile_codec_v6/layers.py",
+      "source_sha256": "fb9279987810c8ea37ae9a6f8208e55fce1488d19902c7c2edf7b9a6a2f0f524",
+      "release_sha256": "fb9279987810c8ea37ae9a6f8208e55fce1488d19902c7c2edf7b9a6a2f0f524"
+    },
+    {
+      "source": "manifeel/tactile_ae_uni/layout.py",
+      "destination": "runtime/dexjoco/tactile_encoder/manifeel/tactile_ae_uni/layout.py",
+      "source_sha256": "f9d91ff187b89ff5d658364efad971cb3f8ad053762f29d243a2047ed7dfcdea",
+      "release_sha256": "f9d91ff187b89ff5d658364efad971cb3f8ad053762f29d243a2047ed7dfcdea"
+    },
+    {
+      "source": "manifeel/tactile_ae_uni/__init__.py",
+      "destination": "runtime/dexjoco/tactile_encoder/manifeel/tactile_ae_uni/__init__.py",
+      "source_sha256": "99556a930ef7596b20e07ae43c4e136da7b99fc7f8f4804d48c9dcb2b73911c9",
+      "release_sha256": "b553e6c0af382ed20ee1d0fd439faded5746dbecf348c118e0cf1111d547500f"
+    },
+    {
+      "source": "manifeel/tactile_ae_uni/model.py",
+      "destination": "runtime/dexjoco/tactile_encoder/manifeel/tactile_ae_uni/model.py",
+      "source_sha256": "4465dbcffa047558949e5850cda2cc835b4ad65b0e376d225cddf8a9a1126de2",
+      "release_sha256": "4465dbcffa047558949e5850cda2cc835b4ad65b0e376d225cddf8a9a1126de2"
+    },
+    {
+      "source": "manifeel/tactile_ae_uni/data.py",
+      "destination": "runtime/dexjoco/tactile_encoder/manifeel/tactile_ae_uni/data.py",
+      "source_sha256": "7da20a4e71e1ed772961da9c8566c5916d4761a67e92d3af3a9f8fff7a3a9d9c",
+      "release_sha256": "7da20a4e71e1ed772961da9c8566c5916d4761a67e92d3af3a9f8fff7a3a9d9c"
+    },
+    {
+      "source": "manifeel/tactile_ae_v41/decoder.py",
+      "destination": "runtime/dexjoco/tactile_encoder/manifeel/tactile_ae_v41/decoder.py",
+      "source_sha256": "0aeb5c861c7180c674eb03da888eb5b7854165e1ee6c20579a489f36db8c8912",
+      "release_sha256": "0aeb5c861c7180c674eb03da888eb5b7854165e1ee6c20579a489f36db8c8912"
+    },
+    {
+      "source": "manifeel/tactile_ae_v41/config.py",
+      "destination": "runtime/dexjoco/tactile_encoder/manifeel/tactile_ae_v41/config.py",
+      "source_sha256": "5978d18ad7436cbd6510f8e08e43753ce280ef2f2a5654248d84f685dc708810",
+      "release_sha256": "5978d18ad7436cbd6510f8e08e43753ce280ef2f2a5654248d84f685dc708810"
+    },
+    {
+      "source": "manifeel/tactile_ae_v41/manifeel.py",
+      "destination": "runtime/dexjoco/tactile_encoder/manifeel/tactile_ae_v41/manifeel.py",
+      "source_sha256": "36ccb141ef3370071a13b15616796ec8b03f87e2e31db43901c71aa0e08a3c2c",
+      "release_sha256": "36ccb141ef3370071a13b15616796ec8b03f87e2e31db43901c71aa0e08a3c2c"
+    },
+    {
+      "source": "manifeel/tactile_ae_v41/surface_encoder.py",
+      "destination": "runtime/dexjoco/tactile_encoder/manifeel/tactile_ae_v41/surface_encoder.py",
+      "source_sha256": "62cc8bb75cbac6ce52020c7c27aaac1d6b172803561cd48ea8aab8b0f8bc6217",
+      "release_sha256": "62cc8bb75cbac6ce52020c7c27aaac1d6b172803561cd48ea8aab8b0f8bc6217"
+    },
+    {
+      "source": "manifeel/tactile_ae_v41/__init__.py",
+      "destination": "runtime/dexjoco/tactile_encoder/manifeel/tactile_ae_v41/__init__.py",
+      "source_sha256": "bda027fdddb51fa2e12be07d2cc7180c49224e255229eff6068dbc09c1ae1196",
+      "release_sha256": "b553e6c0af382ed20ee1d0fd439faded5746dbecf348c118e0cf1111d547500f"
+    },
+    {
+      "source": "manifeel/tactile_ae_v41/manifeel_normalizer.py",
+      "destination": "runtime/dexjoco/tactile_encoder/manifeel/tactile_ae_v41/manifeel_normalizer.py",
+      "source_sha256": "81f5ded0618825e0e684910a745afd59845a8218abdc31456f630bf0559cb0cd",
+      "release_sha256": "81f5ded0618825e0e684910a745afd59845a8218abdc31456f630bf0559cb0cd"
+    },
+    {
+      "source": "manifeel/tactile_ae_v41/normalizer.py",
+      "destination": "runtime/dexjoco/tactile_encoder/manifeel/tactile_ae_v41/normalizer.py",
+      "source_sha256": "57d649a9477baec38939a48583555cf9ebfe312d46810a0043593600633cb0f4",
+      "release_sha256": "57d649a9477baec38939a48583555cf9ebfe312d46810a0043593600633cb0f4"
+    },
+    {
+      "source": "manifeel/tactile_ae_v41/layers.py",
+      "destination": "runtime/dexjoco/tactile_encoder/manifeel/tactile_ae_v41/layers.py",
+      "source_sha256": "7ee162f5f4fec995bfceb06718c18089f2073a164ec42997d1e60b1cb074dd35",
+      "release_sha256": "7ee162f5f4fec995bfceb06718c18089f2073a164ec42997d1e60b1cb074dd35"
+    },
+    {
+      "source": "configs/zero1_wam_va.json",
+      "destination": "training/configs/dexjoco_zero1.json",
+      "source_sha256": "a9d0ca3fff633e9cbc30c66bed43b6e69e5179e10e30c24e2d760af9ff759ebf",
+      "release_sha256": "a9d0ca3fff633e9cbc30c66bed43b6e69e5179e10e30c24e2d760af9ff759ebf"
+    },
+    {
+      "source": "dexjoco-vla/dexjoco/dexjoco/action_contract.py",
+      "destination": "runtime/dexjoco/action_contract.py",
+      "release_sha256": "1c1bca3e8d1158ceb598772e99f76488482dc916c417b2172ac34d8f7c6f86ba"
+    },
+    {
+      "source": "dexjoco-vla/dexjoco/dexjoco_motus_client/evaluate.py (interpolation helpers)",
+      "destination": "runtime/dexjoco/control.py",
+      "release_sha256": "417c961f43db5c49639a6d7e46b17cec59aff607c2490569c2531bf0dd9e1401"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "task": "fold_glasses",
+  "server": {
+    "status": "ok",
+    "step": 2,
+    "architecture": "wam_va",
+    "tactile_enabled": true,
+    "tactile_protocol": "DJ-TFA-2.0-palmar",
+    "tactile_surface_order": "left16_then_right16",
+    "tactile_surface_count": 32,
+    "tactile_codec": "v4_uni_50k",
+    "temporal_contract": "dexjoco_raw50_at16_stride3_v8_stride6_horizon960ms_v1",
+    "action_count": 16,
+    "image_preprocess": "original_native_views_then_t_mosaic_then_resize"
+  },
+  "seed": 0,
+  "episodes": 1,
+  "successes": 0,
+  "success_rate": 0.0,
+  "episode_seed_mode": "legacy-stream",
+  "rand_full": false,
+  "randomize_dynamics": false,
+  "max_env_steps": 96,
+  "max_replans": null,
+  "chunk_steps": 16,
+  "actions_per_chunk": 16,
+  "sparse_densify": true,
+  "replan_env_steps": null,
+  "dense_env_steps_per_chunk": 48,
+  "dense_env_steps_per_replan": 48,
+  "smooth_alpha": 1.0,
+  "record_video": false,
+  "video_fps": null,
+  "episodes_detail": [
+    {
+      "episode": 0,
+      "episode_seed": null,
+      "success": false,
+      "env_steps": 96,
+      "replans": 2,
+      "tactile_enabled": true,
+      "video_dir": null
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+# Install the appropriate CUDA or vendor PPU torch build first.
+torch>=2.5
+numpy>=1.26
+scipy>=1.14
+omegaconf>=2.3
+safetensors>=0.4
+diffusers>=0.31
+transformers>=4.49
+einops>=0.8
+opencv-python-headless>=4.10
+Pillow
+h5py
+ftfy
+regex
+sentencepiece
+pyyaml
+imageio
+imageio-ffmpeg

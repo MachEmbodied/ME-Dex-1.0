@@ -1,0 +1,111 @@
+experiment:
+  name: dexjoco_wtam_raw_aligned_shift1_11task_dj_tfa2_v4_uni_hand2_stage1_wan_random_action_tactile_full1100_original_v_32ppu
+  architecture: wam_va
+  variant: dexjoco_wtam_11task_dj_tfa2_v4_uni_hand2_2token_1024_full1100
+  dataset_cohort: all1100_including_failed_replay_and_task_gates
+  initialization: motus_stage1_wan_random_action_tactile
+  temporal_contract:
+    name: dexjoco_raw50_at16_stride3_v8_stride6_horizon960ms_v1
+    note: "V/A timing is unchanged from VAT-v1: A/T +3..+48, V +6..+48."
+  action_semantics:
+    state_input: right22_then_left22_quantile_normalized_44d
+    action_target: right22_then_left22_quantile_normalized_44d
+    deployment_output: quantile_denormalized_before_environment_step
+    single_arm_padding: masked_zero_for_clean_noise_noisy_target_and_inference
+    action_loss_mask: per_sample_mean_over_valid_right22_only
+  tactile_semantics:
+    force_protocol: DJ-TFA-2.0-palmar
+    physical_input: left16_then_right16_each_FnFuFv_10x14
+    codec: v4_uni_50k_ema
+    latent: 34_slots_x_48
+    missing_slots: [3, 20]
+    token_packing: fixed_left16_right16_to_2x768_then_linear_1024
+    tactile_tokens: 18_frames_x_2_hands_equals_36
+    padding: codec_frame_token_valid_is_always_preserved
+
+training_mode: finetune
+common:
+  action_dim: 44
+  state_dim: 44
+  action_chunk_size: 16
+  num_video_frames: 8
+  video_height: 384
+  video_width: 320
+  global_downsample_rate: 3
+  video_action_freq_ratio: 2
+  source_fps: 50.0
+  temporal_contract_name: dexjoco_raw50_at16_stride3_v8_stride6_horizon960ms_v1
+dataset:
+  type: dexjoco_wtam_raw_aligned_dj_tfa2
+  image_aug: false
+  preflight_report_filename: vat_preflight_report_all1100.json
+  training_smoke_report_filename: vat_training_smoke_report_all1100.json
+  params:
+    root: "${oc.env:DEXJOCO_DATA_ROOT,datasets/dexjoco}"
+    manifest_filename: all_manifest_dj_tfa2.json
+    video_source_policy: original
+    t5_cache_path: "${oc.env:DEXJOCO_T5_CACHE,datasets/dexjoco/t5_cache}"
+    normalization_stats_path: "${oc.env:DEXJOCO_NORMALIZATION,assets/dexjoco/normalization.json}"
+    embodiment: multitask
+    val_enabled: false
+    task_sampling: uniform_over_tasks
+    sampling_mode: window_index
+    va_uniform_window_sampling: true
+    sampling_seed: 42
+    sampling_global_batch_size: 64
+    condition_only: false
+    samples_per_episode: 32
+    action_count: 16
+    action_stride: 3
+    num_video_frames: 8
+    video_stride: 6
+    tasks: [click_mouse, fold_glasses, hammer_nail, pick_bucket, pinch_tongs, water_plant, bimanual_assembly, bimanual_hanoi, bimanual_microwave_cook, bimanual_photograph, bimanual_unlock_ipad]
+model:
+  use_understanding: false
+  joint_attention_mode: full_bidirectional
+  # Strictly load the official 825-tensor Motus Stage 1 WAN checkpoint only.
+  # Action Expert and Tactile Expert/Hand2 projection remain freshly initialized.
+  load_pretrained_backbones: true
+  wan: {config_path: "${oc.env:ME_DEX_WAN_PATH,checkpoints/Wan2.2-TI2V-5B}", checkpoint_path: "${oc.env:ME_DEX_STAGE1_CHECKPOINT,checkpoints/Motus-Stage1/model.safetensors}", task_embedding_path: null, task_text_conditioning_path: null, task_id: null, task_probabilities: null, frozen: false, training_strategy: flow_matching, rollout_steps: 10, vae_path: "${oc.env:ME_DEX_WAN_PATH,checkpoints/Wan2.2-TI2V-5B}/Wan2.2_VAE.pth", precision: bfloat16, expected_num_tensors: 825}
+  vlm: {checkpoint_path: null, precision: bfloat16, frozen: true}
+  action_expert: {hidden_size: 1024, ffn_dim_multiplier: 4, norm_eps: 1.0e-5}
+  tactile:
+    enabled: true
+    codec_type: v4_uni_50k
+    source_root: runtime/dexjoco/tactile_encoder
+    # The shared snapshot has no .git metadata.  The revision is recorded and
+    # the exact imported source files below are what enforce the code identity.
+    source_revision: 5858661deed185b5d981c4f8a50636cea1c0b63c
+    source_files_sha256:
+      manifeel/tactile_ae_uni/model.py: 4465dbcffa047558949e5850cda2cc835b4ad65b0e376d225cddf8a9a1126de2
+      manifeel/tactile_ae_uni/layout.py: f9d91ff187b89ff5d658364efad971cb3f8ad053762f29d243a2047ed7dfcdea
+      manifeel/tactile_ae_uni/data.py: 7da20a4e71e1ed772961da9c8566c5916d4761a67e92d3af3a9f8fff7a3a9d9c
+      manifeel/tactile_ae_v41/normalizer.py: 57d649a9477baec38939a48583555cf9ebfe312d46810a0043593600633cb0f4
+      manifeel/tactile_ae_v41/manifeel_normalizer.py: 81f5ded0618825e0e684910a745afd59845a8218abdc31456f630bf0559cb0cd
+      manifeel/tactile_ae_v3/layers.py: 7a41acf7a057cf8c565cf75cc1d50722e0ccc51ba2068100047fb4966854be35
+      manifeel/tactile_ae_v4/layers.py: 2b56120de06acfd3655bd1eea24186c94b6f88377f31e0635930e7bffbc1102b
+      manifeel/tactile_ae_v41/config.py: 5978d18ad7436cbd6510f8e08e43753ce280ef2f2a5654248d84f685dc708810
+      manifeel/tactile_ae_v41/layers.py: 7ee162f5f4fec995bfceb06718c18089f2073a164ec42997d1e60b1cb074dd35
+      manifeel/tactile_ae_v41/decoder.py: 0aeb5c861c7180c674eb03da888eb5b7854165e1ee6c20579a489f36db8c8912
+      manifeel/tactile_ae_v41/manifeel.py: 36ccb141ef3370071a13b15616796ec8b03f87e2e31db43901c71aa0e08a3c2c
+      manifeel/tactile_ae_v41/surface_encoder.py: 62cc8bb75cbac6ce52020c7c27aaac1d6b172803561cd48ea8aab8b0f8bc6217
+      manifeel/tactile_codec_v6/layers.py: fb9279987810c8ea37ae9a6f8208e55fce1488d19902c7c2edf7b9a6a2f0f524
+    checkpoint_path: "${oc.env:ME_DEX_TACTILE_CHECKPOINT,checkpoints/tactile_ae_uni/step_50000.pt}"
+    expected_sha256: 1c545124c15e123b124de2a35d9d7c4566e02dc2ce8df02354b1c9d64b499747
+    expected_step: 50000
+    normalization_group: dexjoco_shared_si
+  tactile_expert: {initialization_seed: 42042, latent_dim: 48, latent_slices: 18, queries_per_slice: 34, condition_slices: 2, hidden_size: 1024, ffn_multiplier: 4, wan_num_heads: 24, wan_head_dim: 128, norm_eps: 1.0e-6, freq_dim: 256, token_packing: dexjoco_left_right}
+  # Match the masked-zero VAT baseline for action padding/loss. V4 codec
+  # validity remains preserved for tactile attention, noise, and loss.
+  padding_contract: {masked_zero_padding: true, pi05_zero_padding: false}
+  und_expert: {hidden_size: 512, ffn_dim_multiplier: 4, norm_eps: 1.0e-5, vlm: {input_dim: 2048, projector_type: mlp3x_silu}}
+  time_distribution: {timestep_sample_method: uniform, sigmoid_scale: 1.0, min_t: 0.0, max_t: 1.0, video_train_schedule_shift: 1.0, action_train_schedule_shift: 1.0, tactile_train_schedule_shift: 1.0}
+  inference: {num_inference_timesteps: 10}
+  loss_weights: {video_loss_weight: 1.0, action_loss_weight: 1.0, tactile_loss_weight: 1.0, per_sample_valid_mean_loss: true}
+  ema: {enabled: false, update_after_step: 0, inv_gamma: 1.0, power: 0.75, min_value: 0.0, max_value: 0.9999}
+# Two nodes x 16 PPUs, microbatch 2, no gradient accumulation: 2x32x1=64.
+training: {batch_size: 2, expected_world_size: 32, gradient_accumulation_steps: 1, global_batch_size: 64, max_steps: 60000, learning_rate: 5.0e-5, wan_learning_rate: 1.0e-5, tactile_learning_rate: 1.0e-5, weight_decay: 0.01, scheduler_type: linear, warmup_steps: 1000, cycle_length: 60000, f_max: 0.99, f_min: 0.1, grad_clip_norm: 0.5, use_amp: true, find_unused_parameters: false, optimizer_foreach: false}
+system: {checkpoint_dir: outputs/dexjoco, checkpoint_total_limit: null, log_level: INFO, log_interval: 10, per_task_action_loss_interval: 500, memory_log_interval: 50, performance_warmup_steps: 50, performance_measurement_steps: 400, save_interval: 10000, val_interval: 60001, num_workers: 8, prefetch_factor: 4, persistent_workers: false, pin_memory: true, disable_python_gc: false}
+logging: {report_to: tensorboard, wandb_project: motus-wam-va, tensorboard_log_dir: tensorboard_logs/raw_aligned_shift1_11task_dj_tfa2_v4_uni_hand2_stage1_wan_random_action_tactile_full1100_original_v_32ppu, run_name: dexjoco_wtam_raw_aligned_shift1_11task_dj_tfa2_v4_uni_hand2_stage1_wan_random_action_tactile_full1100_original_v_32ppu_60k}
+resume: {checkpoint_path: null, reset_scheduler: false}
+finetune: {checkpoint_path: null}

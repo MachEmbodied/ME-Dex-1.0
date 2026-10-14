@@ -1,0 +1,8 @@
+# Install DexJoCo and its MuJoCo dependencies in the simulator environment first.
+numpy>=1.26
+scipy>=1.14
+opencv-python-headless>=4.10
+pyyaml
+imageio
+imageio-ffmpeg
+h5py

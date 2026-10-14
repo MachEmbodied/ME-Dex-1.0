@@ -3,3 +3,9 @@ __pycache__/
 .pytest_cache/
 checkpoints/
 validation_outputs/
+outputs/
+*.log
+.env
+.env.*
+._*
+.DS_Store
